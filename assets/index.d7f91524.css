@@ -1,0 +1,1 @@
+#app{width:100%;max-width:1000px;margin:0 auto}#app>*{margin-bottom:1em}#raw{display:block;width:100%}button{margin-right:1em}input#townscaper-id{border-radius:4px}#link-area[data-changed]{pointer-events:none;cursor:not-allowed}#link-area[data-changed] input#townscaper-id{border:1px solid red}

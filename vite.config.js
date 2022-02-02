@@ -3,6 +3,7 @@ import showdown from 'showdown'
 import fs from 'fs'
 
 export default defineConfig({
+  base: '/wordle2townscaper/',
   plugins: [
     (() => {
       const moduleId = '@readme'

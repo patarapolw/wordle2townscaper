@@ -1,4 +1,4 @@
-# [Wordle](https://www.powerlanguage.co.uk/wordle/) to [TownScaper](https://www.townscapergame.com/)
+# [Wordle](https://www.powerlanguage.co.uk/wordle/)++ to [TownScaper](https://www.townscapergame.com/)
 
 Similar to <https://tarmo888.github.io/Wordle2Townscaper/>, but can parse Wordle variants.
 

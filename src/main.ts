@@ -27,13 +27,13 @@ elRaw.oninput = () => {
   elLinkArea.setAttribute('data-changed', '')
 }
 
-function setId(v: string) {
+function setId(v = 'FCIfgnPf_c') {
   elId.value = v
   elLink.href = 'https://' + elLink.innerText.trim() + elId.value
   elLinkArea.removeAttribute('data-changed')
 }
 
-setId('FCIfgnPf_c')
+setId()
 
 const mapDown = new Map<string, string>()
 
@@ -66,7 +66,10 @@ elSubmit.onclick = () => {
     }
   }
 
-  if (!matrix.length) return
+  if (!matrix.length) {
+    setId()
+    return
+  }
 
   const height = Number(elNTries.value)
 

@@ -13,6 +13,16 @@ const elSubmit = document.querySelector<HTMLButtonElement>('#submit')!
 const elCleaned = document.querySelector<HTMLDivElement>('#cleaned')!
 const elLinkArea = document.querySelector<HTMLDivElement>('#link-area')!
 
+function setNTries(n: number, evt: Event): false {
+  if (evt) evt.preventDefault()
+  elNTries.value = String(n)
+  elSubmit.click()
+
+  return false
+}
+
+Object.assign(window, { setNTries })
+
 elRaw.oninput = () => {
   elLinkArea.setAttribute('data-changed', '')
 }
@@ -56,6 +66,8 @@ elSubmit.onclick = () => {
     }
   }
 
+  if (!matrix.length) return
+
   const height = Number(elNTries.value)
 
   if (!isNaN(height) && height > matrix.length) {
@@ -64,8 +76,6 @@ elSubmit.onclick = () => {
       ...Array(height - matrix.length).fill(Array(width).fill('⬛'))
     ]
   }
-
-  console.log(matrix)
 
   elCleaned.innerHTML = matrix.map((m) => m.join('')).join('<br/>')
 

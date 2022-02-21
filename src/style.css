@@ -46,3 +46,9 @@ input#townscaper-id {
   justify-content: center;
   width: 100%;
 }
+
+a[onclick] {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}

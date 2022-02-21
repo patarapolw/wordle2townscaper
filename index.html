@@ -72,7 +72,12 @@
     <div class="field">
       <label for="ntries">Number of tries:</label>
       <input type="number" name="ntries" id="ntries">
-      <span>Wordle: 6, Quordle: 18 (9x2), 言葉で遊ぼう: 12, ことのはたんご: 10</span>
+      <span>
+        <a onclick="setNTries(6)">Wordle</a>: 6,
+        <a onclick="setNTries(18)">Quordle</a>: 18 (9x2),
+        <a onclick="setNTries(12)">言葉で遊ぼう</a>: 12,
+        <a onclick="setNTries(10)">ことのはたんご</a>: 10
+      </span>
     </div>
     <div id="cleaned"></div>
     <div id="button-area">

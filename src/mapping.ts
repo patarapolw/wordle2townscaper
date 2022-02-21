@@ -5,6 +5,7 @@ export const similar = {
   '🟧': [':yellow_square:', ':large_yellow_square:'],
   '🟨': ['🟡', ':yellow_square:', ':yellow_circle:'],
   '🟩': ['🟢', ':green_square:', ':green_circle:'],
+  '🟦': [':blue_square:', ':large_blue_square:'],
   '🟪': [':purple_square:', ':large_purple_square:']
 }
 
@@ -15,5 +16,6 @@ export const mapping: Record<keyof typeof similar, number> = {
   '🟧': 2,
   '🟨': 3,
   '🟩': 5,
+  '🟦': 10,
   '🟪': 11
 }

@@ -100,3 +100,9 @@ elRaw.addEventListener('paste', () => {
     elSubmit.click()
   })
 })
+
+elNTries.oninput = () => {
+  setTimeout(() => {
+    elSubmit.click()
+  })
+}

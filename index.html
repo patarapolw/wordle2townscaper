@@ -69,6 +69,11 @@
     <div id="readme"></div>
 
     <textarea id="raw" cols="30" rows="10"></textarea>
+    <div class="field">
+      <label for="ntries">Number of tries:</label>
+      <input type="number" name="ntries" id="ntries">
+      <span>Wordle: 6, Quordle: 18 (9x2), 言葉で遊ぼう: 12, ことのはたんご: 10</span>
+    </div>
     <div id="cleaned"></div>
     <div id="button-area">
       <button id="submit">Parse</button>
@@ -76,7 +81,7 @@
         <a id="townscaper-link" href="https://oskarstalberg.com/Townscaper" target="_blank" rel="noopener noreferrer">
           oskarstalberg.com/Townscaper/#
         </a>
-        <input type="text" id="townscaper-id" disabled>
+        <input type="text" id="townscaper-id" style="flex-grow: 1" disabled>
       </span>
     </div>
   </div>

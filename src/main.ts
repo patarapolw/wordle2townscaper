@@ -6,6 +6,7 @@ import { mapping, similar } from './mapping'
 document.querySelector<HTMLDivElement>('#readme')!.innerHTML = md
 
 const elRaw = document.querySelector<HTMLTextAreaElement>('#raw')!
+const elNTries = document.querySelector<HTMLInputElement>('#ntries')!
 const elId = document.querySelector<HTMLInputElement>('#townscaper-id')!
 const elLink = document.querySelector<HTMLAnchorElement>('#townscaper-link')!
 const elSubmit = document.querySelector<HTMLButtonElement>('#submit')!
@@ -54,6 +55,17 @@ elSubmit.onclick = () => {
       }
     }
   }
+
+  const height = Number(elNTries.value)
+
+  if (!isNaN(height) && height > matrix.length) {
+    matrix = [
+      ...matrix,
+      ...Array(height - matrix.length).fill(Array(width).fill('⬛'))
+    ]
+  }
+
+  console.log(matrix)
 
   elCleaned.innerHTML = matrix.map((m) => m.join('')).join('<br/>')
 

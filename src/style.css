@@ -35,3 +35,14 @@ input#townscaper-id {
 #link-area[data-changed] input#townscaper-id {
   border: 1px solid red;
 }
+
+.field > * + * {
+  margin-left: 1em;
+}
+
+#button-area, #link-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}

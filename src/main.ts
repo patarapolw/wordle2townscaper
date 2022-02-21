@@ -13,15 +13,12 @@ const elSubmit = document.querySelector<HTMLButtonElement>('#submit')!
 const elCleaned = document.querySelector<HTMLDivElement>('#cleaned')!
 const elLinkArea = document.querySelector<HTMLDivElement>('#link-area')!
 
-function setNTries(n: number, evt: Event): false {
-  if (evt) evt.preventDefault()
-  elNTries.value = String(n)
-  elSubmit.click()
-
-  return false
-}
-
-Object.assign(window, { setNTries })
+document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
+  el.addEventListener('click', () => {
+    elNTries.value = String(el.getAttribute('data-wordle-ntries'))
+    elSubmit.click()
+  })
+})
 
 elRaw.oninput = () => {
   elLinkArea.setAttribute('data-changed', '')

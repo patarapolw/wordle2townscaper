@@ -15,9 +15,9 @@
   <link rel="icon" type="image/x-icon" href="https://tarmo888.github.io/Wordle2Townscaper/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wordle++ to Townscaper</title>
-  <script type="module" crossorigin src="/wordle2townscaper/assets/index.28e6a6c5.js"></script>
+  <script type="module" crossorigin src="/wordle2townscaper/assets/index.da3c0f41.js"></script>
   <link rel="modulepreload" href="/wordle2townscaper/assets/vendor.0b632fde.js">
-  <link rel="stylesheet" href="/wordle2townscaper/assets/index.adfc7236.css">
+  <link rel="stylesheet" href="/wordle2townscaper/assets/index.c394e5f5.css">
 </head>
 
 <body>
@@ -73,14 +73,24 @@
 
     <textarea id="raw" cols="30" rows="10"></textarea>
     <div class="field">
-      <label for="ntries">Number of tries:</label>
-      <input type="number" name="ntries" id="ntries">
-      <span>
-        <a onclick="setNTries(6)">Wordle</a>: 6,
-        <a onclick="setNTries(18)">Quordle</a>: 18 (9x2),
-        <a onclick="setNTries(12)">言葉で遊ぼう</a>: 12,
-        <a onclick="setNTries(10)">ことのはたんご</a>: 10
-      </span>
+      <div class="field">
+        <label for="ntries">Number of tries:</label>
+        <input type="number" name="ntries" id="ntries">
+      </div>
+      <div class="field">
+        <span class="field">
+          <a data-wordle-ntries="6">Wordle</a>: 6
+        </span>
+        <span class="field">
+          <a data-wordle-ntries="18">Quordle</a>: 18 (9&times;2)
+        </span>
+        <span class="field">
+          <a data-wordle-ntries="12">言葉で遊ぼう</a>: 12
+        </span>
+        <span class="field">
+          <a data-wordle-ntries="10">ことのはたんご</a>: 10
+        </span>
+      </div>
     </div>
     <div id="cleaned"></div>
     <div id="button-area">

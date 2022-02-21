@@ -15,9 +15,9 @@
   <link rel="icon" type="image/x-icon" href="https://tarmo888.github.io/Wordle2Townscaper/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wordle++ to Townscaper</title>
-  <script type="module" crossorigin src="/wordle2townscaper/assets/index.e9bb37b6.js"></script>
+  <script type="module" crossorigin src="/wordle2townscaper/assets/index.d619f7bf.js"></script>
   <link rel="modulepreload" href="/wordle2townscaper/assets/vendor.0b632fde.js">
-  <link rel="stylesheet" href="/wordle2townscaper/assets/index.9271b1e0.css">
+  <link rel="stylesheet" href="/wordle2townscaper/assets/index.855e32cc.css">
 </head>
 
 <body>
@@ -72,6 +72,11 @@
     <div id="readme"></div>
 
     <textarea id="raw" cols="30" rows="10"></textarea>
+    <div class="field">
+      <label for="ntries">Number of tries:</label>
+      <input type="number" name="ntries" id="ntries">
+      <span>Wordle: 6, Quordle: 18 (9x2), 言葉で遊ぼう: 12, ことのはたんご: 10</span>
+    </div>
     <div id="cleaned"></div>
     <div id="button-area">
       <button id="submit">Parse</button>
@@ -79,7 +84,7 @@
         <a id="townscaper-link" href="https://oskarstalberg.com/Townscaper" target="_blank" rel="noopener noreferrer">
           oskarstalberg.com/Townscaper/#
         </a>
-        <input type="text" id="townscaper-id" disabled>
+        <input type="text" id="townscaper-id" style="flex-grow: 1" disabled>
       </span>
     </div>
   </div>

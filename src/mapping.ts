@@ -1,4 +1,5 @@
 export const similar = {
+  ' ': [],
   '⬜': ['⚪️', ':white_large_square:', ':white_circle:'],
   '⬛': ['⚫️', ':black_large_square:', ':black_circle:'],
   '🟥': [':red_square:', ':large_red_square:'],
@@ -10,6 +11,7 @@ export const similar = {
 }
 
 export const mapping: Record<keyof typeof similar, number> = {
+  ' ': -1,
   '⬜': -1,
   '⬛': -1,
   '🟥': 1,
@@ -18,4 +20,8 @@ export const mapping: Record<keyof typeof similar, number> = {
   '🟩': 5,
   '🟦': 10,
   '🟪': 11
+}
+
+export function isSquare(c: string) {
+  return c !== ' '
 }

@@ -78,9 +78,9 @@
         <span class="field">
           <a data-wordle-ntries="6">Wordle</a>: 6
         </span>
-        <!-- <span class="field">
-          <a data-wordle-ntries="18">Quordle</a>: 18 (9&times;2)
-        </span> -->
+        <span class="field">
+          <a data-wordle-ntries="9">Quordle</a>: 9 (2&times;2)
+        </span>
         <span class="field">
           <a data-wordle-ntries="12">言葉で遊ぼう</a>: 12
         </span>
@@ -89,7 +89,13 @@
         </span>
       </div>
     </div>
-    <div id="cleaned"></div>
+    <details>
+      <summary>Parsed result:</summary>
+      <blockquote>Components:
+        <span id="building-squares"></span>
+      </blockquote>
+    </details>
+    <div id="cleaned" contenteditable="true"></div>
     <div id="button-area">
       <button id="submit">Parse</button>
       <span id="link-area">

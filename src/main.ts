@@ -25,7 +25,10 @@ const loadOptions: ILoadOptions = {
 
 document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
   el.addEventListener('click', () => {
-    loadOptions.type = el.textContent || undefined
+    loadOptions.type =
+      loadOptions.type === el.textContent
+        ? undefined
+        : el.textContent || undefined
     loadOptions.ntries =
       Number(el.getAttribute('data-wordle-ntries')) || undefined
     loadOptions.width =
@@ -187,10 +190,12 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
       if (v) {
         hash += `&${k}=${v}`
         localStorage.setItem(k, v)
+      } else {
+        localStorage.removeItem(k)
       }
     })
 
-    history.replaceState({ v, ...opts }, hash, `#${hash}`)
+    location.hash = hash
   } else {
     opts = {}
   }

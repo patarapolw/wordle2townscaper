@@ -55,11 +55,14 @@ input#townscaper-id {
   flex-grow: 1;
 }
 
+a[data-wordle-ntries] {
+  cursor: pointer;
+  word-break: keep-all;
+}
+
 a[data-wordle-ntries]:not([data-current]) {
   color: blue;
   text-decoration: underline;
-  cursor: pointer;
-  word-break: keep-all;
 }
 
 span.field + span.field::before {

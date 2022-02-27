@@ -270,9 +270,6 @@ function setLoadOptions() {
   document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
     if (el.textContent === loadOptions.type) {
       el.setAttribute('data-current', 'true')
-      setTimeout(() => {
-        localStorage.setItem('type', el.textContent!)
-      }, 10)
     } else {
       el.removeAttribute('data-current')
     }
@@ -295,7 +292,7 @@ async function main() {
 
       switch (k) {
         case 'type':
-          loadOptions.type = v
+          loadOptions.type = decodeURIComponent(v)
           break
         case 'ntries':
           loadOptions.ntries = Number(v) || undefined

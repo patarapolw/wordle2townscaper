@@ -34,7 +34,6 @@ document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
     loadOptions.width =
       Number(el.getAttribute('data-wordle-width')) || undefined
 
-    setLoadOptions()
     elSubmit.click()
   })
 })
@@ -133,7 +132,7 @@ async function doSubParse(raw: string, fromElClean?: boolean) {
       matrix = [
         ...matrix,
         ...Array(loadOptions.ntries - matrix.length).fill(
-          matrix[0].map((c) => (isSquare(c) ? '⬛' : ' '))
+          matrix[0].map((c) => (isSquare(c) ? '⬜' : ' '))
         )
       ]
     }
@@ -181,12 +180,12 @@ interface ILoadOptions {
   width?: number
 }
 
-function setId(v?: string, opts: ILoadOptions = loadOptions) {
+function setId(v?: string, init?: boolean) {
   if (v) {
     elLinkArea.removeAttribute('data-changed')
     let hash = v
 
-    Object.entries(opts).map(([k, v]) => {
+    Object.entries(loadOptions).map(([k, v]) => {
       if (v) {
         hash += `&${k}=${v}`
         localStorage.setItem(k, v)
@@ -196,8 +195,10 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
     })
 
     location.hash = hash
+
+    setLoadOptions()
   } else {
-    opts = {}
+    init = false
   }
 
   v = v || 'FCIfgnPf_c'
@@ -207,7 +208,7 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
   elLink.href = elLink.getAttribute('data-baseurl')! + v
   elLink.innerText = elLink.href.replace(/^https:\/\//, '')
 
-  if (Object.keys(opts).length) {
+  if (init === true) {
     const reverseMapping = new Map<number, keyof typeof similar>()
     Object.entries(mapping).map(([k, v]) => {
       reverseMapping.set(v, k as keyof typeof similar)
@@ -222,8 +223,8 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
       JSON.stringify(Array(height).fill(Array(sp.length).fill('⬜')))
     )
 
-    if (opts.ntries) {
-      const { ntries } = opts
+    if (loadOptions.ntries) {
+      const { ntries } = loadOptions
       Array(Math.floor(height / ntries))
         .fill(null)
         .map((_, i) => {
@@ -245,8 +246,8 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
       })
     })
 
-    if (opts.width) {
-      const { width } = opts
+    if (loadOptions.width) {
+      const { width } = loadOptions
       Array(Math.floor(sp.length / width))
         .fill(null)
         .map((_, i) => {
@@ -302,7 +303,7 @@ async function main() {
       }
     })
 
-  setId(id, loadOptions)
+  setId(id, true)
 }
 
 main()

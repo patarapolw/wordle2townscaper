@@ -15,7 +15,7 @@
   <link rel="icon" type="image/x-icon" href="https://tarmo888.github.io/Wordle2Townscaper/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wordle++ to Townscaper</title>
-  <script type="module" crossorigin src="/wordle2townscaper/assets/index.da3c0f41.js"></script>
+  <script type="module" crossorigin src="/wordle2townscaper/assets/index.b202da29.js"></script>
   <link rel="modulepreload" href="/wordle2townscaper/assets/vendor.0b632fde.js">
   <link rel="stylesheet" href="/wordle2townscaper/assets/index.c394e5f5.css">
 </head>
@@ -81,9 +81,9 @@
         <span class="field">
           <a data-wordle-ntries="6">Wordle</a>: 6
         </span>
-        <!-- <span class="field">
-          <a data-wordle-ntries="18">Quordle</a>: 18 (9&times;2)
-        </span> -->
+        <span class="field">
+          <a data-wordle-ntries="9">Quordle</a>: 9 (2&times;2)
+        </span>
         <span class="field">
           <a data-wordle-ntries="12">言葉で遊ぼう</a>: 12
         </span>
@@ -92,7 +92,13 @@
         </span>
       </div>
     </div>
-    <div id="cleaned"></div>
+    <details>
+      <summary>Parsed result:</summary>
+      <blockquote>Components:
+        <span id="building-squares"></span>
+      </blockquote>
+    </details>
+    <div id="cleaned" contenteditable="true"></div>
     <div id="button-area">
       <button id="submit">Parse</button>
       <span id="link-area">

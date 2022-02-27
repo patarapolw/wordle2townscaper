@@ -161,7 +161,7 @@ async function doBuildLink(matrix: (keyof typeof similar)[][] = []) {
 function setId(v?: string) {
   if (v) {
     elLinkArea.removeAttribute('data-changed')
-    history.replaceState({ v }, v, `?v=${v}`)
+    history.replaceState({ v }, v, `#${v}`)
   }
 
   v = v || 'FCIfgnPf_c'
@@ -173,7 +173,7 @@ function setId(v?: string) {
 }
 
 async function main() {
-  setId(new URL(location.href).searchParams.get('v') || '')
+  setId(new URL(location.href).hash.replace(/^#/, '') || '')
 }
 
 main()

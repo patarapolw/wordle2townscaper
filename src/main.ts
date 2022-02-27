@@ -38,23 +38,25 @@ document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
   })
 })
 
-elRaw.oninput = () => {
+elRaw.addEventListener('input', () => {
   elSubmit.click()
-}
+})
 
-elRaw.onpaste = () => {
+elRaw.addEventListener('paste', () => {
   elSubmit.click()
-}
+})
 
-elCleaned.oninput = () => {
+elCleaned.addEventListener('input', () => {
   setTimeout(() => {
     doSubParse(elCleaned.innerText, true).then(doBuildLink)
   })
-}
+})
 
-elNTries.oninput = () => {
+elNTries.addEventListener('input', () => {
+  loadOptions.type = undefined
+  loadOptions.ntries = Number(elNTries.value) || undefined
   elSubmit.click()
-}
+})
 
 const mapDown = new Map<string, string>()
 
@@ -69,11 +71,11 @@ elBuildingSquares.innerText = Object.keys(similar).join(' ')
 
 const regex = new RegExp(`(?:${[...new Set(mapDown.keys())].join('|')})`, 'g')
 
-elSubmit.onclick = () => {
+elSubmit.addEventListener('click', () => {
   setTimeout(() => {
     doParse(elRaw.value).then(doBuildLink)
   })
-}
+})
 
 async function doParse(raw: string) {
   const oldMatrix: (keyof typeof similar)[][] = []

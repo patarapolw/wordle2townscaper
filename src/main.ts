@@ -214,7 +214,7 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
       ...sp.flatMap((s) => Object.keys(s.voxels).map((k) => Number(k) - 1))
     )
     const matrix: (keyof typeof similar)[][] = JSON.parse(
-      JSON.stringify(Array(height).fill(Array(sp.length).fill('⬛')))
+      JSON.stringify(Array(height).fill(Array(sp.length).fill('⬜')))
     )
 
     if (opts.ntries) {
@@ -235,7 +235,6 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
         i = height - i + 1
 
         const j = s.x / 9 - 1
-        console.log(i)
         matrix[i] = matrix[i] || []
         matrix[i][j] = reverseMapping.get(c) || '⬜'
       })

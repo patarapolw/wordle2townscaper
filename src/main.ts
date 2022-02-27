@@ -171,10 +171,12 @@ function setId(v?: string) {
   })
   elLink.href = elLink.getAttribute('data-baseurl')! + v
   elLink.innerText = elLink.href.replace(/^https:\/\//, '')
+
+  history.replaceState({ v }, v, `?v=${v}`)
 }
 
 async function main() {
-  setId()
+  setId(new URL(location.href).searchParams.get('v') || '')
 }
 
 main()

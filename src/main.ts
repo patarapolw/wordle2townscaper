@@ -270,6 +270,7 @@ function setLoadOptions() {
   document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
     if (el.textContent === loadOptions.type) {
       el.setAttribute('data-current', 'true')
+      localStorage.setItem('type', el.textContent)
     } else {
       el.removeAttribute('data-current')
     }

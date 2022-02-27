@@ -28,12 +28,11 @@ input#townscaper-id {
 }
 
 #link-area[data-changed] {
-  pointer-events: none;
   cursor: not-allowed;
 }
 
-#link-area[data-changed] input#townscaper-id {
-  border: 1px solid red;
+#link-area[data-changed] a {
+  color: lightgray;
 }
 
 .field > * + *::before {
@@ -67,4 +66,19 @@ span.field + span.field::before {
   content: ',';
   display: inline-block;
   width: 0.5em;
+}
+
+.townscaper-id, #townscaper-link {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.townscaper-id {
+  display: inline-block;
+  max-width: 100vw;
+  word-break: break-all;
+}
+
+#townscaper-link {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

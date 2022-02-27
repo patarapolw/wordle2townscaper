@@ -9,7 +9,7 @@ document.querySelector<HTMLDivElement>('#readme')!.innerHTML = md
 
 const elRaw = document.querySelector<HTMLTextAreaElement>('#raw')!
 const elNTries = document.querySelector<HTMLInputElement>('#ntries')!
-const elId = document.querySelector<HTMLInputElement>('#townscaper-id')!
+const elIds = document.querySelectorAll<HTMLElement>('.townscaper-id')
 const elLink = document.querySelector<HTMLAnchorElement>('#townscaper-link')!
 const elSubmit = document.querySelector<HTMLButtonElement>('#submit')!
 const elCleaned = document.querySelector<HTMLDivElement>('#cleaned')!
@@ -154,8 +154,13 @@ function setId(v?: string) {
   if (v) {
     elLinkArea.removeAttribute('data-changed')
   }
-  elId.value = v || 'FCIfgnPf_c'
-  elLink.href = 'https://' + elLink.innerText.trim() + elId.value
+
+  v = v || 'FCIfgnPf_c'
+  elIds.forEach((el) => {
+    el.innerText = v!
+  })
+  elLink.href = elLink.getAttribute('data-baseurl')! + v
+  elLink.innerText = elLink.href.replace(/^https:\/\//, '')
 }
 
 async function main() {

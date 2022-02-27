@@ -76,6 +76,7 @@ span.field + span.field::before {
   display: inline-block;
   max-width: 100vw;
   word-break: break-all;
+  user-select: all;
 }
 
 #townscaper-link {

@@ -33,7 +33,9 @@ elRaw.onpaste = () => {
 }
 
 elCleaned.oninput = () => {
-  elSubmit.click()
+  setTimeout(() => {
+    doSubParse(elCleaned.innerText, true).then(doBuildLink)
+  })
 }
 
 elNTries.oninput = () => {
@@ -56,19 +58,19 @@ const regex = new RegExp(reStr, 'g')
 
 elSubmit.onclick = () => {
   setTimeout(() => {
-    doParse().then(doBuildLink)
+    doParse(elRaw.value).then(doBuildLink)
   })
 }
 
 elSubmit.click()
 
-async function doParse() {
+async function doParse(raw: string) {
   const matrix: (keyof typeof similar)[][] = []
 
-  for (const block of elRaw.value.trim().split(/(?:\r?\n){2,}/g)) {
+  for (const block of raw.trim().split(/(?:\r?\n){2,}/g)) {
     const b0 = block.trim()
     if (b0) {
-      matrix.push(...doSubParse(b0))
+      matrix.push(...(await doSubParse(b0)))
       matrix.push([])
     }
   }
@@ -80,7 +82,7 @@ async function doParse() {
   return matrix
 }
 
-function doSubParse(raw: string) {
+async function doSubParse(raw: string, fromElClean?: boolean) {
   let matrix: (keyof typeof similar)[][] = []
   let width = 0
 
@@ -99,15 +101,17 @@ function doSubParse(raw: string) {
     }
   }
 
-  const height = Number(elNTries.value)
+  if (!fromElClean) {
+    const height = Number(elNTries.value)
 
-  if (matrix.length && !isNaN(height) && height > matrix.length) {
-    matrix = [
-      ...matrix,
-      ...Array(height - matrix.length).fill(
-        matrix[0].map((c) => (isSquare(c) ? '⬛' : ' '))
-      )
-    ]
+    if (matrix.length && !isNaN(height) && height > matrix.length) {
+      matrix = [
+        ...matrix,
+        ...Array(height - matrix.length).fill(
+          matrix[0].map((c) => (isSquare(c) ? '⬛' : ' '))
+        )
+      ]
+    }
   }
 
   return matrix

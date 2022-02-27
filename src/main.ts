@@ -17,16 +17,21 @@ const elLinkArea = document.querySelector<HTMLDivElement>('#link-area')!
 const elBuildingSquares =
   document.querySelector<HTMLDivElement>('#building-squares')!
 
-const loadOptions: ILoadOptions = {}
+const loadOptions: ILoadOptions = {
+  type: localStorage.getItem('type') || undefined,
+  ntries: Number(localStorage.getItem('ntries')) || undefined,
+  width: Number(localStorage.getItem('width')) || undefined
+}
 
 document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
   el.addEventListener('click', () => {
+    loadOptions.type = el.textContent || undefined
     loadOptions.ntries =
       Number(el.getAttribute('data-wordle-ntries')) || undefined
     loadOptions.width =
       Number(el.getAttribute('data-wordle-width')) || undefined
 
-    elNTries.value = String(loadOptions.ntries || '')
+    setLoadOptions()
     elSubmit.click()
   })
 })
@@ -117,12 +122,14 @@ async function doSubParse(raw: string, fromElClean?: boolean) {
   }
 
   if (!fromElClean) {
-    const height = Number(elNTries.value)
-
-    if (matrix.length && !isNaN(height) && height > matrix.length) {
+    if (
+      matrix.length &&
+      loadOptions.ntries &&
+      loadOptions.ntries > matrix.length
+    ) {
       matrix = [
         ...matrix,
-        ...Array(height - matrix.length).fill(
+        ...Array(loadOptions.ntries - matrix.length).fill(
           matrix[0].map((c) => (isSquare(c) ? '⬛' : ' '))
         )
       ]
@@ -177,7 +184,10 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
     let hash = v
 
     Object.entries(opts).map(([k, v]) => {
-      hash += `&${k}=${v}`
+      if (v) {
+        hash += `&${k}=${v}`
+        localStorage.setItem(k, v)
+      }
     })
 
     history.replaceState({ v, ...opts }, hash, `#${hash}`)
@@ -250,7 +260,21 @@ function setId(v?: string, opts: ILoadOptions = loadOptions) {
   }
 }
 
+function setLoadOptions() {
+  elNTries.value = String(loadOptions.ntries || '')
+
+  document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
+    if (el.textContent === loadOptions.type) {
+      el.setAttribute('data-current', 'true')
+    } else {
+      el.removeAttribute('data-current')
+    }
+  })
+}
+
 async function main() {
+  setLoadOptions()
+
   let id = ''
   new URL(location.href).hash
     .replace(/^#/, '')

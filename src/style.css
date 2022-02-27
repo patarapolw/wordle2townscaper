@@ -55,7 +55,7 @@ input#townscaper-id {
   flex-grow: 1;
 }
 
-a[data-wordle-ntries] {
+a[data-wordle-ntries]:not([data-current]) {
   color: blue;
   text-decoration: underline;
   cursor: pointer;

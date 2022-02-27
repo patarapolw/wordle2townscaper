@@ -12,4 +12,5 @@ declare module 'townsclipper' {
     }
   }
   export function sparseToClip(sparse: SparseCorner[]): string
+  export function clipToSparse(clip: string): SparseCorner[]
 }

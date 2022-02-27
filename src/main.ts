@@ -1,7 +1,7 @@
 import './style.css'
 
 import md from '@readme'
-import { SparseCorner, sparseToClip } from 'townsclipper'
+import { SparseCorner, clipToSparse, sparseToClip } from 'townsclipper'
 
 import { isSquare, mapping, similar } from './mapping'
 
@@ -17,9 +17,16 @@ const elLinkArea = document.querySelector<HTMLDivElement>('#link-area')!
 const elBuildingSquares =
   document.querySelector<HTMLDivElement>('#building-squares')!
 
+const loadOptions: ILoadOptions = {}
+
 document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
   el.addEventListener('click', () => {
-    elNTries.value = String(el.getAttribute('data-wordle-ntries'))
+    loadOptions.ntries =
+      Number(el.getAttribute('data-wordle-ntries')) || undefined
+    loadOptions.width =
+      Number(el.getAttribute('data-wordle-width')) || undefined
+
+    elNTries.value = String(loadOptions.ntries || '')
     elSubmit.click()
   })
 })
@@ -158,10 +165,24 @@ async function doBuildLink(matrix: (keyof typeof similar)[][] = []) {
   setId(sparseToClip(sparse))
 }
 
-function setId(v?: string) {
+interface ILoadOptions {
+  type?: string
+  ntries?: number
+  width?: number
+}
+
+function setId(v?: string, opts: ILoadOptions = loadOptions) {
   if (v) {
     elLinkArea.removeAttribute('data-changed')
-    history.replaceState({ v }, v, `#${v}`)
+    let hash = v
+
+    Object.entries(opts).map(([k, v]) => {
+      hash += `&${k}=${v}`
+    })
+
+    history.replaceState({ v, ...opts }, hash, `#${hash}`)
+  } else {
+    opts = {}
   }
 
   v = v || 'FCIfgnPf_c'
@@ -170,10 +191,90 @@ function setId(v?: string) {
   })
   elLink.href = elLink.getAttribute('data-baseurl')! + v
   elLink.innerText = elLink.href.replace(/^https:\/\//, '')
+
+  if (Object.keys(opts).length) {
+    const reverseMapping = new Map<number, keyof typeof similar>()
+    Object.entries(mapping).map(([k, v]) => {
+      reverseMapping.set(v, k as keyof typeof similar)
+    })
+
+    const sp = clipToSparse(v)
+    const height = Math.max(
+      0,
+      ...sp.flatMap((s) => Object.keys(s.voxels).map((k) => Number(k) - 1))
+    )
+    const matrix: (keyof typeof similar)[][] = JSON.parse(
+      JSON.stringify(Array(height).fill(Array(sp.length).fill('⬛')))
+    )
+
+    if (opts.ntries) {
+      const { ntries } = opts
+      Array(Math.floor(height / ntries))
+        .fill(null)
+        .map((_, i) => {
+          if (!i) return
+          const h = i * ntries - 1
+          matrix[h] = []
+        })
+    }
+
+    sp.map((s) => {
+      Object.entries(s.voxels).map(([h, c]) => {
+        let i = Number(h)
+        if (i === 0) return
+        i = height - i + 1
+
+        const j = s.x / 9 - 1
+        console.log(i)
+        matrix[i] = matrix[i] || []
+        matrix[i][j] = reverseMapping.get(c) || '⬜'
+      })
+    })
+
+    if (opts.width) {
+      const { width } = opts
+      Array(Math.floor(sp.length / width))
+        .fill(null)
+        .map((_, i) => {
+          if (!i) return
+
+          matrix.map((r) => {
+            if (!i) return
+            const h = i * width
+            r[h] = ' '
+          })
+        })
+    }
+
+    elCleaned.innerHTML = matrix.map((m) => m.join('')).join('<br/>')
+  }
 }
 
 async function main() {
-  setId(new URL(location.href).hash.replace(/^#/, '') || '')
+  let id = ''
+  new URL(location.href).hash
+    .replace(/^#/, '')
+    .split('&')
+    .map((kv) => kv.split('=', 2))
+    .map(([k, v]) => {
+      if (!v) {
+        id = k
+        return
+      }
+
+      switch (k) {
+        case 'type':
+          loadOptions.type = v
+          break
+        case 'ntries':
+          loadOptions.ntries = Number(v) || undefined
+          break
+        case 'width':
+          loadOptions.width = Number(v) || undefined
+      }
+    })
+
+  setId(id, loadOptions)
 }
 
 main()

@@ -61,8 +61,6 @@ elSubmit.onclick = () => {
   })
 }
 
-elSubmit.click()
-
 async function doParse(raw: string) {
   const oldMatrix: (keyof typeof similar)[][] = []
 
@@ -163,6 +161,7 @@ async function doBuildLink(matrix: (keyof typeof similar)[][] = []) {
 function setId(v?: string) {
   if (v) {
     elLinkArea.removeAttribute('data-changed')
+    history.replaceState({ v }, v, `?v=${v}`)
   }
 
   v = v || 'FCIfgnPf_c'
@@ -171,8 +170,6 @@ function setId(v?: string) {
   })
   elLink.href = elLink.getAttribute('data-baseurl')! + v
   elLink.innerText = elLink.href.replace(/^https:\/\//, '')
-
-  history.replaceState({ v }, v, `?v=${v}`)
 }
 
 async function main() {

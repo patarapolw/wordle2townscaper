@@ -53,8 +53,7 @@ Object.entries(similar).map(([k, vs]) => {
 
 elBuildingSquares.innerText = Object.keys(similar).join(' ')
 
-const reStr = `(?:${[...new Set(mapDown.keys())].join('|')})`
-const regex = new RegExp(reStr, 'g')
+const regex = new RegExp(`(?:${[...new Set(mapDown.keys())].join('|')})`, 'g')
 
 elSubmit.onclick = () => {
   setTimeout(() => {
@@ -65,21 +64,32 @@ elSubmit.onclick = () => {
 elSubmit.click()
 
 async function doParse(raw: string) {
-  const matrix: (keyof typeof similar)[][] = []
+  const oldMatrix: (keyof typeof similar)[][] = []
 
   for (const block of raw.trim().split(/(?:\r?\n){2,}/g)) {
     const b0 = block.trim()
     if (b0) {
-      matrix.push(...(await doSubParse(b0)))
-      matrix.push([])
+      oldMatrix.push(...(await doSubParse(b0)))
+      oldMatrix.push([])
     }
   }
 
-  matrix.pop()
+  const newMatrix: typeof oldMatrix = []
+  const isBlank = (r: typeof oldMatrix[0]) => {
+    return !r.join('').trim().length
+  }
 
-  elCleaned.innerHTML = matrix.map((m) => m.join('')).join('<br/>')
+  oldMatrix.map((r, i) => {
+    if (isBlank(r)) {
+      if (i === 0 || i === oldMatrix.length - 1) return
+      if (oldMatrix[i - 1] && isBlank(oldMatrix[i - 1])) return
+    }
+    newMatrix.push(r)
+  })
 
-  return matrix
+  elCleaned.innerHTML = newMatrix.map((m) => m.join('')).join('<br/>')
+
+  return newMatrix
 }
 
 async function doSubParse(raw: string, fromElClean?: boolean) {

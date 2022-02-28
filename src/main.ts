@@ -254,20 +254,24 @@ function setId(v?: string, init?: boolean) {
 
     if (loadOptions.width) {
       const { width } = loadOptions
-      Array(Math.floor(sp.length / width))
-        .fill(null)
-        .map((_, i) => {
-          if (!i) return
-          matrix.map((r) => {
+      if (sp.length > width) {
+        Array(Math.floor(sp.length / width))
+          .fill(null)
+          .map((_, i) => {
             if (!i) return
-            const h = i * width
-            if (r[h] === DEFAULT_SQUARE) {
-              r[h] = ' '
-            } else {
-              loadOptions.width = undefined
-            }
+            matrix.map((r) => {
+              if (!i) return
+              const h = i * width
+              if (r[h] === DEFAULT_SQUARE) {
+                r[h] = ' '
+              } else {
+                loadOptions.width = undefined
+              }
+            })
           })
-        })
+      } else {
+        loadOptions.width = undefined
+      }
     }
 
     elCleaned.innerHTML = matrix.map((m) => m.join('')).join('<br/>')

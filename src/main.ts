@@ -196,7 +196,9 @@ function setId(v?: string, init?: boolean) {
       }
     })
 
-    location.hash = hash
+    const u = new URL(location.href)
+    u.hash = hash
+    location.replace(u.href)
 
     setLoadOptions()
   } else {

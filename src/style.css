@@ -86,3 +86,7 @@ span.field + span.field::before {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.emoji {
+  font-family: 'Noto Color Emoji';
+}

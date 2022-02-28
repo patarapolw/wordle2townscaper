@@ -14,6 +14,9 @@
   <link rel="icon" sizes="128x128" href="https://tarmo888.github.io/Wordle2Townscaper/favicon.ico">
   <link rel="icon" type="image/x-icon" href="https://tarmo888.github.io/Wordle2Townscaper/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/noto-color-emoji@1.0.1/noto-color-emoji.css"
+    integrity="sha256-zFBGsE1omgMAcuft9mMaGwhTsangLuSNP5vkBmuenAM=" crossorigin="anonymous">
   <title>Wordle++ to Townscaper</title>
 </head>
 
@@ -68,7 +71,7 @@
   <div id="app">
     <div id="readme"></div>
 
-    <textarea id="raw" cols="30" rows="10"></textarea>
+    <textarea id="raw" class="emoji" cols="30" rows="10"></textarea>
     <div class="field">
       <div class="field">
         <label for="ntries">Number of tries:</label>
@@ -92,10 +95,10 @@
     <details>
       <summary>Parsed result:</summary>
       <blockquote>Components:
-        <span id="building-squares"></span>
+        <span id="building-squares" class="emoji"></span>
       </blockquote>
     </details>
-    <div id="cleaned" contenteditable="true"></div>
+    <div id="cleaned" class="emoji" contenteditable="true"></div>
     <div id="button-area">
       <button id="submit">Parse</button>
       <span class="townscaper-id"></span>

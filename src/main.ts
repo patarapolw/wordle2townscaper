@@ -69,7 +69,7 @@ Object.entries(similar).map(([k, vs]) => {
   })
 })
 
-elBuildingSquares.innerText = Object.keys(similar).join(' ')
+elBuildingSquares.innerText = Object.keys(similar).join('')
 
 const regex = new RegExp(`(?:${[...new Set(mapDown.keys())].join('|')})`, 'g')
 

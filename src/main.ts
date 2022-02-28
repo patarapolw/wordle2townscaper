@@ -5,6 +5,8 @@ import { SparseCorner, clipToSparse, sparseToClip } from 'townsclipper'
 
 import { isSquare, mapping, similar } from './mapping'
 
+const DEFAULT_SQUARE = '⬜'
+
 document.querySelector<HTMLDivElement>('#readme')!.innerHTML = md
 
 const elRaw = document.querySelector<HTMLTextAreaElement>('#raw')!
@@ -134,7 +136,7 @@ async function doSubParse(raw: string, fromElClean?: boolean) {
       matrix = [
         ...matrix,
         ...Array(loadOptions.ntries - matrix.length).fill(
-          matrix[0].map((c) => (isSquare(c) ? '⬜' : ' '))
+          matrix[0].map((c) => (isSquare(c) ? DEFAULT_SQUARE : ' '))
         )
       ]
     }
@@ -224,7 +226,7 @@ function setId(v?: string, init?: boolean) {
       ...sp.flatMap((s) => Object.keys(s.voxels).map((k) => Number(k) - 1))
     )
     const matrix: (keyof typeof similar)[][] = JSON.parse(
-      JSON.stringify(Array(height).fill(Array(sp.length).fill('⬜')))
+      JSON.stringify(Array(height).fill(Array(sp.length).fill(DEFAULT_SQUARE)))
     )
 
     if (loadOptions.ntries) {
@@ -246,7 +248,7 @@ function setId(v?: string, init?: boolean) {
 
         const j = s.x / 9 - 1
         matrix[i] = matrix[i] || []
-        matrix[i][j] = reverseMapping.get(c) || '⬜'
+        matrix[i][j] = reverseMapping.get(c) || DEFAULT_SQUARE
       })
     })
 
@@ -256,11 +258,14 @@ function setId(v?: string, init?: boolean) {
         .fill(null)
         .map((_, i) => {
           if (!i) return
-
           matrix.map((r) => {
             if (!i) return
             const h = i * width
-            r[h] = ' '
+            if (r[h] === DEFAULT_SQUARE) {
+              r[h] = ' '
+            } else {
+              loadOptions.width = undefined
+            }
           })
         })
     }

@@ -45,7 +45,16 @@ elRaw.addEventListener('input', () => {
 })
 
 elRaw.addEventListener('paste', () => {
-  elSubmit.click()
+  setTimeout(() => {
+    const m = /\d+\/(\d+)/.exec(elRaw.value)
+    console.log(m)
+    if (m && m[1]) {
+      loadOptions.ntries = Number(m[1])
+      elNTries.value = m[1]
+    }
+
+    elSubmit.click()
+  })
 })
 
 elCleaned.addEventListener('input', () => {

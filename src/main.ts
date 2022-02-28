@@ -63,10 +63,10 @@ elNTries.addEventListener('input', () => {
 const mapDown = new Map<string, string>()
 
 Object.entries(similar).map(([k, vs]) => {
-  mapDown.set(k, k)
   vs.map((v) => {
     mapDown.set(v, k)
   })
+  mapDown.set(k, k)
 })
 
 elBuildingSquares.innerText = Object.keys(similar).join('')

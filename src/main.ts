@@ -19,26 +19,54 @@ const elLinkArea = document.querySelector<HTMLDivElement>('#link-area')!
 const elBuildingSquares =
   document.querySelector<HTMLDivElement>('#building-squares')!
 
+const elTypes = document.querySelectorAll<HTMLAnchorElement>(
+  'a[data-wordle-ntries]'
+)
+
 const loadOptions: ILoadOptions = {
   type: localStorage.getItem('type') || undefined,
   ntries: Number(localStorage.getItem('ntries')) || undefined,
   width: Number(localStorage.getItem('width')) || undefined
 }
 
-document.querySelectorAll('[data-wordle-ntries]').forEach((el) => {
-  el.addEventListener('click', () => {
-    loadOptions.type =
-      loadOptions.type === el.textContent
-        ? undefined
-        : el.textContent || undefined
-    loadOptions.ntries =
-      Number(el.getAttribute('data-wordle-ntries')) || undefined
-    loadOptions.width =
-      Number(el.getAttribute('data-wordle-width')) || undefined
+const types = new Map<
+  string,
+  {
+    type: string
+    ntries: number
+    width?: number
+  }
+>()
 
-    elSubmit.click()
-  })
+elTypes.forEach((el) => {
+  if (el.innerText) {
+    const t = {
+      type: el.innerText,
+      ntries: Number(el.getAttribute('data-wordle-ntries')),
+      width: Number(el.getAttribute('data-wordle-width'))
+    }
+
+    types.set(t.type, t)
+
+    el.addEventListener('click', () => {
+      if (loadOptions.type === t.type) {
+        loadOptions.type = undefined
+        loadOptions.width = undefined
+      } else {
+        loadOptions.type = t.type
+        loadOptions.ntries = t.ntries
+        loadOptions.width = t.width
+        elNTries.value = String(t.ntries)
+      }
+
+      elSubmit.click()
+    })
+  }
 })
+
+const reTypes = new RegExp(
+  `(${[...types.keys()].map((s) => escapeRegExp(s)).join('|')})`
+)
 
 elRaw.addEventListener('input', () => {
   elSubmit.click()
@@ -46,11 +74,28 @@ elRaw.addEventListener('input', () => {
 
 elRaw.addEventListener('paste', () => {
   setTimeout(() => {
-    const m = /\d+\/(\d+)/.exec(elRaw.value)
-    console.log(m)
+    let type = ''
+    const m = reTypes.exec(elRaw.value)
+
     if (m && m[1]) {
-      loadOptions.ntries = Number(m[1])
-      elNTries.value = m[1]
+      const t = types.get(m[1])
+      if (t) {
+        type = t.type
+        loadOptions.type = t.type
+        loadOptions.ntries = t.ntries
+        loadOptions.width = t.width
+        elNTries.value = String(t.ntries)
+      }
+    }
+
+    if (!type) {
+      loadOptions.type = undefined
+
+      const m = /\d+\/(\d+)/.exec(elRaw.value)
+      if (m && m[1]) {
+        loadOptions.ntries = Number(m[1])
+        elNTries.value = m[1]
+      }
     }
 
     elSubmit.click()
@@ -80,7 +125,10 @@ Object.entries(similar).map(([k, vs]) => {
 
 elBuildingSquares.innerText = Object.keys(similar).join('')
 
-const regex = new RegExp(`(?:${[...new Set(mapDown.keys())].join('|')})`, 'g')
+const regex = new RegExp(
+  `(?:${[...new Set(mapDown.keys())].map((s) => escapeRegExp(s)).join('|')})`,
+  'g'
+)
 
 elSubmit.addEventListener('click', () => {
   setTimeout(() => {
@@ -297,6 +345,10 @@ function setLoadOptions() {
       el.removeAttribute('data-current')
     }
   })
+}
+
+function escapeRegExp(s: string) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
 async function main() {

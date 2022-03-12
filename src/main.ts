@@ -78,7 +78,9 @@ elRaw.addEventListener('paste', () => {
     const m = reTypes.exec(elRaw.value)
 
     if (m && m[1]) {
-      const t = types.get(m[1])
+      const t = types.get(
+        /Wordle ?[2２](?!\/)/.test(elRaw.value) ? 'Wordle 2' : m[1]
+      )
       if (t) {
         type = t.type
         loadOptions.type = t.type

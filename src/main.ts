@@ -93,7 +93,7 @@ elRaw.addEventListener('paste', () => {
     if (!type) {
       loadOptions.type = undefined
 
-      const m = /(?:\d+|[xXｘＸ])\/(\d+)/.exec(elRaw.value)
+      const m = /(?:\p{Nd}+|[xXｘＸ])\/(\p{Nd}+)/u.exec(elRaw.value)
       if (m && m[1]) {
         loadOptions.ntries = Number(m[1])
         elNTries.value = m[1]

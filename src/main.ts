@@ -79,7 +79,7 @@ elRaw.addEventListener('paste', () => {
 
     if (m && m[1]) {
       const t = types.get(
-        /Wordle ?[2２](?!\/)/.test(elRaw.value) ? 'Wordle 2' : m[1]
+        /Wordle ?[2２](?!\/)/.test(elRaw.value) ? 'WordHurdle' : m[1]
       )
       if (t) {
         type = t.type
